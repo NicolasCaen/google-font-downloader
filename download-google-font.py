@@ -4,9 +4,13 @@ import zipfile
 from bs4 import BeautifulSoup
 from fontTools.ttLib import TTFont
 
-def download_google_fonts(font_name, output_dir='fonts'):
+def download_google_fonts(font_name, output_dir='fonts', font_format='woff2'):
     """
-    Télécharge les fichiers WOFF2 d'une police Google Font
+    Télécharge les fichiers de police Google Font dans le format spécifié
+    Args:
+        font_name (str): Nom de la police
+        output_dir (str): Répertoire de sortie
+        font_format (str): Format de police ('woff2', 'woff', 'ttf', etc.)
     """
     font_dir = os.path.join(output_dir, font_name.lower().replace(' ', '-'))
     os.makedirs(font_dir, exist_ok=True)
@@ -19,7 +23,7 @@ def download_google_fonts(font_name, output_dir='fonts'):
     weights = ['100', '200', '300', '400', '500', '600', '700', '800', '900']
     styles = ['normal', 'italic']
     
-    base_url = f'https://fonts.googleapis.com/css2?family={font_name.replace(" ", "+")}'
+    base_url = f'https://fonts.googleapis.com/css2?family={font_name.replace(" ", "+")}&display={font_format}'
     
     font_urls = set()
     for weight in weights:
@@ -45,7 +49,7 @@ def download_google_fonts(font_name, output_dir='fonts'):
             new_filename = f"{font_name.lower().replace(' ', '-')}-{weight}"
             if is_italic:
                 new_filename += "-italic"
-            new_filename += ".woff2"
+            new_filename += f".{font_format}"
             
             output_path = os.path.join(font_dir, new_filename)
             
@@ -59,7 +63,7 @@ def download_google_fonts(font_name, output_dir='fonts'):
 
     print(f"Téléchargement terminé pour {font_name}")
 
-# Exemple d'utilisation
+# Exemple d'utilisation modifié
 fonts_to_download = [
     'Lora',
     'Fira Sans',
@@ -94,6 +98,6 @@ fonts_to_download = [
 ]
 
 for font in fonts_to_download:
-    download_google_fonts(font)
+    download_google_fonts(font, output_dir='fonts-tttf', font_format='ttf')  # ou 'ttf', 'woff', etc.
 
 print("Téléchargement des polices terminé.")
