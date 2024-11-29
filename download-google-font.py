@@ -4,6 +4,42 @@ import zipfile
 from bs4 import BeautifulSoup
 from fontTools.ttLib import TTFont
 
+# Ajouter au début du fichier, après les imports
+popular_fonts = [
+    "Roboto", "Open Sans", "Lato", "Montserrat", "Poppins", "Source Sans Pro", "Roboto Condensed", 
+    "Oswald", "Raleway", "Inter", "Ubuntu", "Roboto Mono", "Nunito", "Playfair Display", 
+    "Noto Sans", "Rubik", "PT Sans", "Merriweather", "Work Sans", "Mukta", "Noto Sans JP", 
+    "Lora", "Fira Sans", "Noto Serif", "PT Serif", "Titillium Web", "DM Sans", "Quicksand", 
+    "Nunito Sans", "Heebo", "IBM Plex Sans", "Barlow", "Karla", "Josefin Sans", "Source Code Pro", 
+    "Cairo", "Mulish", "Crimson Text", "Nanum Gothic", "Abel", "Arimo", "Dancing Script", 
+    "Bitter", "Dosis", "Libre Franklin", "Exo 2", "Manrope", "Oxygen", "Libre Baskerville", 
+    "Inconsolata", "Prompt", "Cabin", "Comfortaa", "Assistant", "Maven Pro", "Kanit", 
+    "Archivo Narrow", "Pacifico", "Merriweather Sans", "Hind Siliguri", "Varela Round", 
+    "Arvo", "Lobster", "Teko", "Asap", "Overpass", "Signika", "Hind", "Rajdhani", 
+    "Urbanist", "Indie Flower", "Yanone Kaffeesatz", "Catamaran", "Archivo", "Caveat", 
+    "Barlow Condensed", "Cardo", "Bebas Neue", "Questrial", "Amatic SC", "Vollkorn", 
+    "Encode Sans", "Outfit", "Noto Sans KR", "Zilla Slab", "Spectral", "Alegreya", 
+    "Cormorant Garamond", "Domine", "Chivo", "Satisfy", "Russo One", "Lexend", "Prata", 
+    "Martel", "Cinzel", "Jost", "Noto Sans TC", "Fira Code", "Secular One", "Righteous", 
+    "Tajawal", "Alata", "Advent Pro", "Yantramanav", "Orbitron", "Chakra Petch", 
+    "Philosopher", "Saira", "Sarabun", "Quattrocento Sans", "Kalam", "Courgette", 
+    "Permanent Marker", "Noticia Text", "Crete Round", "Tinos", "Shadows Into Light", 
+    "Patua One", "Alfa Slab One", "Passion One", "Amiri", "Nanum Myeongjo", "Acme", 
+    "Didact Gothic", "Signika Negative", "Barlow Semi Condensed", "Josefin Slab", 
+    "Saira Condensed", "Antic Slab", "Fredoka One", "Gelasio", "Noto Serif JP", 
+    "Alegreya Sans", "Bree Serif", "Cuprum", "Cantarell", "Staatliches", "Pathway Gothic One", 
+    "Balsamiq Sans", "Playfair Display SC", "Paytone One", "Abril Fatface", "Vidaloka", 
+    "Montserrat Alternates", "Sorts Mill Goudy", "Yeseva One", "Ropa Sans", "Poiret One", 
+    "Rokkitt", "Gudea", "Marck Script", "Neuton", "Khand", "Istok Web", "Playball", 
+    "Sawarabi Mincho", "Unica One", "Neucha", "Economica", "Allura", "Fugaz One", 
+    "Arapey", "Glegoo", "Sintony", "Covered By Your Grace", "Allerta", "Tenor Sans"
+]
+
+print("Liste des 150 polices Google Fonts les plus populaires:")
+for i, font in enumerate(popular_fonts, 1):
+    print(f"{i}. {font}")
+print("\n" + "="*50 + "\n")
+
 def download_google_fonts(font_name, output_dir='fonts', font_format='woff2'):
     """
     Télécharge les fichiers de police Google Font dans le format spécifié
@@ -63,41 +99,15 @@ def download_google_fonts(font_name, output_dir='fonts', font_format='woff2'):
 
     print(f"Téléchargement terminé pour {font_name}")
 
-# Exemple d'utilisation modifié
-fonts_to_download = [
-    'Lora',
-    'Fira Sans',
-    'Noto Serif',
-    'Merriweather',
-    'PT Serif',
-    'Nunito Sans',
-    'DM Sans',
-    'Quicksand',
-    'Barlow',
-    'Mulish',
-    'Inconsolata',
-    'Heebo',
-    'Source Code Pro',
-    'Karla',
-    'Josefin Sans',
-    'Cairo',
-    'Dancing Script',
-    'Abel',
-    'Crimson Text',
-    'Bitter',
-    'Arimo',
-    'Libre Baskerville',
-    'Source Serif Pro',
-    'Dosis',
-    'Oxygen',
-    'Libre Franklin',
-    'Manrope',
-    'IBM Plex Sans',
-    'Prompt',
-    'Titillium Web'
-]
+# Obtenir le chemin du script actuel
+script_dir = os.path.dirname(os.path.abspath(__file__))
 
-for font in fonts_to_download:
-    download_google_fonts(font, output_dir='fonts-tttf', font_format='ttf')  # ou 'ttf', 'woff', etc.
+# Interaction utilisateur avec le chemin relatif au script
+font_name = input("Quelle police souhaitez-vous télécharger ? ")
+font_format = input("Dans quel format souhaitez-vous télécharger la police ? (par défaut: woff2) ") or "woff2"
+default_output = os.path.join(script_dir, "fonts")
+output_dir = input("Dans quel dossier souhaitez-vous sauvegarder la police ? (par défaut: dossier courant) ") or default_output
 
-print("Téléchargement des polices terminé.")
+download_google_fonts(font_name, output_dir=output_dir, font_format=font_format)
+
+print("Téléchargement de la police terminé.")
